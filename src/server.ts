@@ -18,12 +18,13 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 		if (!image_url) {
 			return res.status(400).send('Invalid image url!');
     }
+    // Get Image path
     const path = await filterImageFromURL(image_url);
     if (path) {
       return res.status(200).sendFile(path, (err) => {
-				if (!err) {
-					let files: string[] = [path];
-					deleteLocalFiles(files);
+        if (!err) {
+          // Delete all files on server
+					deleteLocalFiles([path]);
 				}
 			});
     }
